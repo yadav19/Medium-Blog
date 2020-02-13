@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<dev class="content-section">
+    <div class="media">
+        <img class="rounded-circle account-img" src="{{ dp }}" >
+        <div class="media-body">
+            <h2 class="account-heading">{{ current_user.username }}</h2>
+            <p class="text-secondary"> {{ current_user.email}} </p>
+        </div>
+    </div>
+</dev>
+
+<div class="content-section">
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Account Page</legend>
+            <div class="form-group">
+                {{ form.username.label(class="form-control-label") }}
+
+                {% if form.username.errors %}
+
+                    {{ form.username(class="form-control form-control-lg is-invalid") }}   
+
+                        {% for error in form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor%}
+                {% else %}
+
+                    {{ form.username(class="form-control form-control-lg") }}
+
+                {% endif %}
+
+            </div>
+            <div class="form-group">
+                {{ form.email.label(class="form-control-label") }}
+
+                {% if form.email.errors %}
+
+                    {{ form.email(class="form-control form-control-lg is-invalid") }}   
+
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor%}
+                {% else %}
+                    {{ form.email(class="form-control form-control-lg") }}
+
+                {% endif %}
+
+            </div>
+            <div class="form-group">
+                {{ form.picture.label }}
+                {{ form.picture(class="form-control-file") }}
+                {% if form.picture.errors %}
+                {% for error in form.picture.errors%}
+                    {{ error }}
+                {% endfor %}
+                {% endif%}
+            </div>
+
+            <div class="form-group">
+                {{ form.update_button(class="btn btn-outline-info") }}
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<!-- <div class="content-section"> -->
+    {% for post in current_user.posts %}
+    <article class="media content-section">
+      <img class="rounded-circle article-img"  src="{{ url_for('static',filename='{}'.format(current_user.profile_pic)) }}" >
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="#">{{ post.author.username }}</a>
+            <small class="text-muted">{{ post.post_date.strftime("%d/%m/%Y")}} </small>
+          </div>
+          <h2><a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
+          <p class="article-content">{{ post.content }}</p>
+        </div>
+      </article>
+    {% endfor %}
+
+
+{% endblock %}
