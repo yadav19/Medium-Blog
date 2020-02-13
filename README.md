@@ -1,6 +1,6 @@
 # Medium-Blog
 - CRUD application
-- A Blog server built completely on flask web framework 
+- A Blog server built completely on flask web framework python
 - SPA (Single Page Application)
 
 ## Features
